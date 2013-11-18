@@ -1,5 +1,8 @@
 TodoApp::Application.routes.draw do
-  get "users/new"
+  resources :users
+
+  root :to => "pages#home"
+  get "/signup" => "users#new", :as => "signup"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
