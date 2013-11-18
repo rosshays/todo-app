@@ -11,3 +11,84 @@
  *= require_self
  *= require_tree .
  */
+
+/* Move down content because we have a fixed navbar that is 50px tall */
+body {
+  padding-top: 50px;
+}
+
+/* unfortunately, this is the only way to make a sidebar 100% height */
+html, body, .container-fluid, .row-fluid, #sidebar, #main-view
+{
+  height: 100%;
+}
+
+#sidebar {
+	background-color: #08c;
+}
+
+#main-view {
+	overflow: scroll;
+	background-color: #f2f2f2;
+	white-space: nowrap;
+
+}
+
+.tasklist {
+	display: inline-block;
+	margin: 10px;
+	width: 280px;
+	border-radius: 5px;
+	background-color: white;
+	vertical-align: top;
+}
+
+.tasklist-header {
+	padding-left: 10px;
+	border-bottom: thin solid #08c;
+}
+
+ul.tasklist-items {
+	list-style-type:none;
+	padding: 5px;
+	padding-left: 10px;
+}
+
+li.task {
+	margin-top: 5px;
+	margin-bottom: 20px;
+}
+
+
+
+.main{
+	overflow: scroll;
+	width:500px; /* probably need to remove this later */
+	/*height:auto;*/
+	white-space: nowrap;
+	overflow-y: hidden ! important; 
+	overflow-x: auto ! important;
+}
+
+.add-task-btn {
+	float: right;
+	margin-right: 5px;
+}
+
+.task-check-btn {
+	float: left;
+	margin-right: 5px;
+}
+
+
+/*******************************************************************************
+ * BOOTSTRAP THEMING
+ ******************************************************************************/
+
+.navbar {
+	background-color: #333; 
+	background-image: none;
+	background-repeat: no-repeat;
+	filter: none;
+	border-bottom: 5px #08c solid!important;
+}

@@ -2,9 +2,9 @@ module ApplicationHelper
 
 	def page_title(title)
 		if title.empty?
-			"Todo App"
+			return "Todo App"
 		else
-			title
+			return title
 		end
 	end
 
