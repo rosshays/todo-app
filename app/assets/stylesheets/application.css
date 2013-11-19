@@ -9,13 +9,7 @@
  * compiled file, but it's generally better to create a new file per style scope.
  *
  *= require_self
- *= require_tree .
  */
-
-/* Move down content because we have a fixed navbar that is 50px tall */
-body {
-  padding-top: 50px;
-}
 
 /* unfortunately, this is the only way to make a sidebar 100% height */
 html, body, .container-fluid, .row-fluid, #sidebar, #main-view
@@ -29,7 +23,7 @@ html, body, .container-fluid, .row-fluid, #sidebar, #main-view
 
 #main-view {
 	overflow: scroll;
-	background-color: #f2f2f2;
+	background-color: gray;
 	white-space: nowrap;
 
 }
