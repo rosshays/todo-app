@@ -8,8 +8,4 @@ module ApplicationHelper
 		content_for :view_specific_css, css.to_s
 	end
 
-	def navbar(navs = {})
-		content_for :page_navbar, navs
-	end
-
 end

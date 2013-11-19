@@ -1,8 +1,11 @@
 TodoApp::Application.routes.draw do
   resources :users
+  resources :sessions, only: [:new, :create, :destroy]
 
   root :to => "pages#home"
   get "/signup" => "users#new", :as => "signup"
+  get "/login" => "sessions#new", :as => "login"
+  delete "/logout" => "sessions#destroy", :as => "logout"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

@@ -12,8 +12,12 @@
 		</div>
 		<div class="navbar-collapse collapse">
 			<form class="navbar-form navbar-right">
-				<a class="btn btn-primary" href="#">Log Out</a>
-				<a class="btn btn-primary" href="#">Log In</a>
+				<% if signed_in? %>
+					<%= link_to "My Profile", "#", class: "btn btn-primary" %>
+					<%= link_to "Log Out", logout_path, method: "delete", class: "btn btn-primary" %>
+				<% else %>
+					<%= link_to "Log In", login_path, class: "btn btn-primary" %>
+				<% end %>
 			</form>
 		</div>
 	</div>

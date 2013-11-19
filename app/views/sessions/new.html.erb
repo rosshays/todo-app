@@ -1,0 +1,15 @@
+<% title "Log in" %>
+<% css "sessions" %>
+
+<%= form_for(:session, url: sessions_path, html: {class: "form-signin well"}) do |f| %>
+	<h2 class="form-signin-heading">Please log in</h2>
+
+	<%= f.label :email %>
+	<%= f.text_field :email, class: "form-control" %>
+
+	<%= f.label :password %>
+	<%= f.password_field :password, class: "form-control" %>
+
+	<%= f.submit "Log in", class: "btn btn-large btn-primary" %>
+
+<% end %>

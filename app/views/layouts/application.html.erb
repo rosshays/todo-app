@@ -13,16 +13,27 @@
 	<%= stylesheet_link_tag yield :view_specific_css %>
 
 	<!-- Latest compiled and minified JavaScript -->
-	<% javascript_include_tag "http://code.jquery.com/jquery-1.10.2.min.js" %>
-	<% javascript_include_tag "http://netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js" %>
+	<%= javascript_include_tag "http://code.jquery.com/jquery-1.10.2.min.js" %>
+	<%= javascript_include_tag "http://netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js" %>
 	<%= javascript_include_tag "application" %>
 
 	<%= csrf_meta_tags %>
 </head>
 
 <body>
-	<%= render partial: "layouts/navbar", locals: {navs: yield(:page_navbar)} %>
-	<%= yield %>
+	<%= render "layouts/navbar" %>
+	<% if signed_in? %>
+		<%= yield %>
+	<% else %>
+		<script type="text/javascript">
+			if (window.location.href.indexOf("signup") == -1 &&
+				window.location.href.indexOf("login") == -1) {
+				window.location.href="/signup" 
+			};
+		</script>
+		<%= yield %>
+	<% end %>
+
 </body>
 
 </html>
