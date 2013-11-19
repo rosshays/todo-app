@@ -12,6 +12,7 @@ end
 
 # Deployment gems
 group :production do
+	gem 'rails_12factor'
 	gem 'pg'
 end
 
