@@ -1,7 +1,7 @@
 <% title "Todo App" %>
 <% css "pages" %>
 
-<!-- page contents -->
+<% if signed_in? %>
 <div class="row-fluid">
 	<!-- sidebar for main view -->
 	<div class="col-lg-2" id="sidebar">
@@ -56,8 +56,6 @@
 	</div>
 </div>
 
-
-
 <!-- New Tasklist Modal -->
 <div class="modal fade" id="newTaskList" tabindex="-1" role="dialog" aria-labelledby="newTasklistLabel" aria-hidden="true">
 	<div class="modal-dialog">
@@ -68,17 +66,17 @@
 			</div>
 
 			<div class="modal-body">
-				<form role="form">
-					<div class="form-group">
-						<label for="newtasklist-name">Tasklist Name</label>
-						<input type="text" class="form-control" id="newtasklist-name" placeholder="Enter name">
-					</div>
-				</form>
+
+				<%= form_for @new_tasklist, html: {class: "form-group"} do |f| %>
+					<%= f.label :name, "Task List Name" %>
+					<%= f.text_field :name, class: "form-control" %>
+
 			</div>
 
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-				<button type="button" class="btn btn-primary">Add tasklist</button>
+				<%= f.submit "Create Task List", class: "btn btn-primary" %>
+				<% end %>
 			</div>
 		</div><!-- /.modal-content -->
 	</div><!-- /.modal-dialog -->
@@ -176,3 +174,6 @@
 		</div><!-- /.modal-content -->
 	</div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+<% else %>
+
+<% end %>
