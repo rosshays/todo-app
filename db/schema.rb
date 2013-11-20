@@ -30,9 +30,9 @@ ActiveRecord::Schema.define(:version => 20131119050242) do
   create_table "tasks", :force => true do |t|
     t.string   "task"
     t.date     "duedate"
+    t.integer  "tasklist_id"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
-    t.integer  "tasklist_id"
   end
 
   create_table "users", :force => true do |t|

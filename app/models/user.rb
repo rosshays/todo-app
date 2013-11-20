@@ -1,16 +1,5 @@
-# class User < ActiveRecord::Base
-# 	before_save { self.email = email.downcase }
-# 	validates :name, presnse: true, length: { maximum: 50}
-
-
-# 	attr_accessible :email, :fullname, :username
-# 	has_many :task_list_users
-
-# 	has_secure_password
-# 	validates :password, length: { minimum: 6 }
-# end
-
 class User < ActiveRecord::Base
+	has_many :task_list_users, dependent: :destroy
 	attr_accessible :email, :name, :password, :password_confirmation, :remember_token
 	before_create :create_remember_token
 	before_save { self.email = email.downcase }
