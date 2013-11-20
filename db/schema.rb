@@ -11,13 +11,13 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131120022022) do
+ActiveRecord::Schema.define(:version => 20131120030636) do
 
   create_table "task_list_users", :force => true do |t|
     t.integer  "user_id"
-    t.integer  "tasklist_id"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.integer  "task_list_id"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
   end
 
   create_table "task_lists", :force => true do |t|

@@ -9,7 +9,7 @@
 
 	<div class="col-lg-10" id="main-view">
 
-		<% @taskslists.each do |list| %>
+		<% current_user.task_lists.each do |list| %>
 			<div class="tasklist">
 				<div class="tasklist-header">
 					<button type="submit" class="btn btn-sm btn-primary add-task-btn" title="Add new task" data-toggle="modal" data-target="#newTask">
@@ -18,7 +18,7 @@
 					<button type="submit" class="btn btn-sm btn-primary add-task-btn" title="Share tasklist" data-toggle="modal" data-target="#shareList">
 						<span class="glyphicon glyphicon-share"/>
 					</button>
-					<h2>To Do</h2>
+					<h2><%= list.name %></h2>
 				</div>
 				<ul class="tasklist-items">
 					<li class="task">
