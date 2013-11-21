@@ -1,7 +1,7 @@
 class User < ActiveRecord::Base
 	has_many :task_list_users, dependent: :destroy
 	has_many :task_lists, through: :task_list_users
-	accepts_nested_attributes_for :task_lists
+	# accepts_nested_attributes_for :task_lists
 
 	attr_accessible :email, :name, :password, :password_confirmation, :remember_token
 	before_create :create_remember_token

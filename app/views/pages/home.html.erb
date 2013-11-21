@@ -5,11 +5,39 @@
 <div class="row-fluid">
 	<!-- sidebar for main view -->
 	<div class="col-lg-2" id="sidebar">
+			<button type="submit" class="btn btn-primary add-tasklist-btn" title="Create new tasklist" data-toggle="modal" data-target="#newTaskList">
+				Add Task List
+			</button>
+		<div class ="upcoming-events">
+			<div class="upcoming-events-header">
+				<h3>Upcoming Tasks</h3>
+			</div>
+			<table class="table table-hover" id="upcoming-events-table">
+				<tr>
+					<td>Dec 1</td>
+					<td>First task</td>
+				</tr>
+				<tr>
+					<td>Dec 12</td>
+					<td>Second task</td>
+				</tr>
+				<tr>
+					<td>Dec 14</td>
+					<td>Third Task</td>
+				</tr>				
+			</table>
+		</div>
+
+
 	</div>
 
 	<div class="col-lg-10" id="main-view">
 
 		<% current_user.task_lists.each do |list| %>
+
+			<% # skipping empty or unintialized list %>
+			<% if list.name.nil? || list.name.empty? then next end%>
+
 			<div class="tasklist">
 				<div class="tasklist-header">
 					<button type="submit" class="btn btn-sm btn-primary add-task-btn" title="Add new task" data-toggle="modal" data-target="#newTask">
@@ -18,7 +46,7 @@
 					<button type="submit" class="btn btn-sm btn-primary add-task-btn" title="Share tasklist" data-toggle="modal" data-target="#shareList">
 						<span class="glyphicon glyphicon-share"/>
 					</button>
-					<h2><%= list.name %></h2>
+					<h2>(<%= list.name %>)</h2>
 				</div>
 				<ul class="tasklist-items">
 					<li class="task">
@@ -42,16 +70,6 @@
 				</ul>
 			</div>
 		<% end %>
-
-		<div class="tasklist">
-			<div class="tasklist-dummy">
-				<button type="submit" class="btn btn-sm btn-primary add-tasklist-btn" title="Create new tasklist" data-toggle="modal" data-target="#newTaskList">
-					<span class="glyphicon glyphicon-plus"/>
-				</button>
-				<h2>Create new list</h2>
-			</div>
-		</div>
-
 
 	</div>
 </div>

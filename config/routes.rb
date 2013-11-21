@@ -2,7 +2,7 @@ TodoApp::Application.routes.draw do
   resources :users
   resources :sessions, only: [:new, :create, :destroy]
   resources :task_lists, only: [:create, :destroy]
-  resources :task_list_users, only: [:create, :destroy]
+  resources :task_list_users, only: [:new, :create, :destroy]
 
   root :to => "pages#home"
   get "/signup" => "users#new", :as => "signup"

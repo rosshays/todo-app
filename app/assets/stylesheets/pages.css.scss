@@ -5,14 +5,33 @@ html, body, .container-fluid, .row-fluid, #sidebar, #main-view
 }
 
 #sidebar {
-	background-color: #08c;
+	/*background-color: #08c;*/
+	background-image: url("texture4.png");
 }
 
 #main-view {
 	overflow: scroll;
-	background-color: gray;
+	/*background-color: gray;*/
+	background-image: url("texture2.png");
 	white-space: nowrap;
+}
 
+.upcoming-events{
+	margin-top:10px;
+	margin-left: -5px;
+	margin-right:-5px;
+
+	border-radius: 5px;
+	background-color: white; 
+	border: 1px solid grey;
+}
+
+.upcoming-events-header{
+	padding-left: 10px;
+	width:195px;
+
+	border-bottom: 2px solid #00aaff;
+	background-color: white;
 }
 
 .tasklist {
@@ -67,9 +86,6 @@ body {
 }
 
 .add-tasklist-btn {
-	float: right;
-	margin-right: 5px;
-}
-.tasklist-dummy {
-	padding-left: 10px;
+	margin-top: 12px;
+	width: 100%;
 }
