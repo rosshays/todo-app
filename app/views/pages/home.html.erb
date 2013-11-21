@@ -98,18 +98,15 @@
 			</div>
 
 			<div class="modal-body">
-				<%= form_for Task.new do |f| %>
+				<%= form_for Task.new(task_list_id: 2) do |f| %>
 
 				<div class="form-group">
 					<%= f.label :task %>
 					<%= f.text_field :task, class: "form-control" %>
 				</div>
 				<div class="form-group">
-					<%= f.label :task_list_id %>
-					<%= f.text_field :task_list_id, class: "form-control" %>
-				</div>
-				<div class="form-group">
-					<%= f.label :duedate %>
+					<%= f.check_box :has_due_date , class: "" %>
+					<%= f.label :duedate, "Due date" %>
 					<%= f.date_select :duedate, class: "form-control" %>
 				</div>
 				<div class="form-group">
