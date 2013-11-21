@@ -38,7 +38,7 @@
 			<% # skipping empty or unintialized list %>
 			<% if list.name.nil? || list.name.empty? then next end%>
 
-			<div class="tasklist">
+			<div class="tasklist" id=<%="tasklist#{list.id}"%>>
 				<div class="tasklist-header">
 					<button type="submit" class="btn btn-sm btn-primary add-task-btn" title="Add new task" data-toggle="modal" data-target="#newTask">
 						<span class="glyphicon glyphicon-plus"/>
@@ -46,27 +46,17 @@
 					<button type="submit" class="btn btn-sm btn-primary add-task-btn" title="Share tasklist" data-toggle="modal" data-target="#shareList">
 						<span class="glyphicon glyphicon-share"/>
 					</button>
-					<h2>(<%= list.name %>)</h2>
+					<h2><%= list.name %></h2>
 				</div>
 				<ul class="tasklist-items">
-					<li class="task">
-						<button type="submit" class="btn btn-sm btn-default task-check-btn" title="Mark complete">
-							<span class="glyphicon glyphicon-unchecked"/>
-						</button>
-						<p>test task<p>
-					</li>
-					<li class="task">
-						<button type="submit" class="btn btn-sm btn-default task-check-btn" title="Mark complete">
-							<span class="glyphicon glyphicon-unchecked"/>
-						</button>
-						<p>And another<p>
-					</li>
-					<li class="task">
-						<button type="submit" class="btn btn-sm btn-default task-check-btn" title="Mark complete">
-							<span class="glyphicon glyphicon-unchecked"/>
-						</button>
-						<p>One last one<p>
-					</li>
+					<% list.tasks.each do |task| %>
+						<li class="task">
+							<button type="submit" class="btn btn-sm btn-default task-check-btn" title="Mark complete">
+								<span class="glyphicon glyphicon-unchecked"/>
+							</button>
+							<p><%= task.task %><p>
+						</li>
+					<% end %>
 				</ul>
 			</div>
 		<% end %>
@@ -84,11 +74,9 @@
 			</div>
 
 			<div class="modal-body">
-
 				<%= form_for @new_tasklist, html: {class: "form-group"} do |f| %>
 					<%= f.label :name, "Task List Name" %>
 					<%= f.text_field :name, class: "form-control" %>
-
 			</div>
 
 			<div class="modal-footer">
@@ -110,29 +98,34 @@
 			</div>
 
 			<div class="modal-body">
-				<form role="form">
-					<div class="form-group">
-						<label for="newtask-task">Task</label>
-						<input type="email" class="form-control" id="newtask-task" placeholder="Enter task">
-					</div>
-					<div class="form-group">
-						<label for="newtask-duedate">Due Date (optional)</label>
-						<input type="date" class="form-control" id="newtask-duedate">
-					</div>
-					<div class="form-group">
-						<label for="newtask-priority">Priority</label>
-						<select class="form-control" id="newtask-priority">
-							<option>Low</option>
-							<option selected="selected">Regular</option>
-							<option>High</option>
-						</select>
-					</div>
-				</form>
+				<%= form_for Task.new do |f| %>
+
+				<div class="form-group">
+					<%= f.label :task %>
+					<%= f.text_field :task, class: "form-control" %>
+				</div>
+				<div class="form-group">
+					<%= f.label :task_list_id %>
+					<%= f.text_field :task_list_id, class: "form-control" %>
+				</div>
+				<div class="form-group">
+					<%= f.label :duedate %>
+					<%= f.date_select :duedate, class: "form-control" %>
+				</div>
+				<div class="form-group">
+					<label for="newtask-priority">Priority</label>
+					<select class="form-control" id="newtask-priority">
+						<option>Low</option>
+						<option selected="selected">Regular</option>
+						<option>High</option>
+					</select>
+				</div>
 			</div>
 
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-				<button type="button" class="btn btn-primary">Add task</button>
+				<%= f.submit "Add Task", class: "btn btn-primary" %>
+				<% end %>
 			</div>
 
 		</div><!-- /.modal-content -->

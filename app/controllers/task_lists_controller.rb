@@ -5,7 +5,7 @@ class TaskListsController < ApplicationController
 		@task_list.task_list_users.build(user_id: current_user.id)
 		
 		# current_user.task_lists.build(params[:task_list])
-		if @task_list.save!
+		if @task_list.save
 			redirect_to root_path
 		else
 			render "pages/home"
