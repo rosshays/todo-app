@@ -11,14 +11,13 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131119050242) do
+ActiveRecord::Schema.define(:version => 20131122021554) do
 
   create_table "task_list_users", :force => true do |t|
     t.integer  "user_id"
-    t.integer  "tasklist_id"
-    t.integer  "permissions"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.integer  "task_list_id"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
   end
 
   create_table "task_lists", :force => true do |t|
@@ -30,9 +29,12 @@ ActiveRecord::Schema.define(:version => 20131119050242) do
   create_table "tasks", :force => true do |t|
     t.string   "task"
     t.date     "duedate"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
-    t.integer  "tasklist_id"
+    t.integer  "task_list_id"
+    t.datetime "created_at",                      :null => false
+    t.datetime "updated_at",                      :null => false
+    t.boolean  "has_due_date"
+    t.string   "priority"
+    t.boolean  "finished",     :default => false
   end
 
   create_table "users", :force => true do |t|

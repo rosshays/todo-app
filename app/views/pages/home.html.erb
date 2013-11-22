@@ -1,52 +1,94 @@
 <% title "Todo App" %>
 <% css "pages" %>
 
-<!-- page contents -->
+<% if signed_in? %>
 <div class="row-fluid">
 	<!-- sidebar for main view -->
 	<div class="col-lg-2" id="sidebar">
+			<button type="submit" class="btn btn-primary add-tasklist-btn" title="Create new tasklist" data-toggle="modal" data-target="#newTaskList">
+				Add Task List
+			</button>
+		<div class ="upcoming-events">
+			<div class="upcoming-events-header">
+				<h3>Upcoming Tasks</h3>
+			</div>
+			<table class="table table-hover" id="upcoming-events-table">
+				<tr>
+					<td>Dec 1</td>
+					<td>First task</td>
+				</tr>
+				<tr>
+					<td>Dec 12</td>
+					<td>Second task</td>
+				</tr>
+				<tr>
+					<td>Dec 14</td>
+					<td>Third Task</td>
+				</tr>				
+			</table>
+		</div>
+
+
 	</div>
 
 	<div class="col-lg-10" id="main-view">
 
-		<div class="tasklist">
-			<div class="tasklist-header">
-				<button type="submit" class="btn btn-sm btn-primary add-task-btn" title="Add new task" data-toggle="modal" data-target="#newTask">
-					<span class="glyphicon glyphicon-plus"/>
-				</button>
-				<button type="submit" class="btn btn-sm btn-primary add-task-btn" title="Share tasklist" data-toggle="modal" data-target="#shareList">
-					<span class="glyphicon glyphicon-share"/>
-				</button>
-				<h2>To Do</h2>
+		<% current_user.task_lists.each do |list| %>
+
+			<% # skipping empty or unintialized list %>
+			<% if list.name.nil? || list.name.empty? then next end%>
+
+			<div class="tasklist" id=<%="tasklist#{list.id}"%>>
+				<div class="tasklist-header">
+					<a type="submit" class="btn btn-sm btn-primary add-task-btn" title="Add new task" data-toggle="modal" data-target="#newTask" data-id=<%= "#{list.id}" %>>
+						<span class="glyphicon glyphicon-plus"/>
+					</a>
+					<a type="submit" class="btn btn-sm btn-primary add-task-btn" title="Share tasklist" data-toggle="modal" data-target="#shareList" data-id=<%= "#{list.id}" %>>
+						<span class="glyphicon glyphicon-share"/>
+					</a>
+					<h2><%= list.name %></h2>
+				</div>
+				<ul class="tasklist-items">
+					<% list.tasks.each do |task| %>
+						<li class="task">
+							<button type="submit" class="btn btn-sm btn-default task-check-btn" title="Mark complete">
+								<span class="glyphicon glyphicon-unchecked"/>
+							</button>
+							<p><%= task.task %><p>
+						</li>
+					<% end %>
+				</ul>
 			</div>
-			<ul class="tasklist-items">
-				<li class="task">
-					<button type="submit" class="btn btn-sm btn-default task-check-btn" title="Mark complete">
-						<span class="glyphicon glyphicon-unchecked"/>
-					</button>
-					<p>test task<p>
-				</li>
-				<li class="task">
-					<button type="submit" class="btn btn-sm btn-default task-check-btn" title="Mark complete">
-						<span class="glyphicon glyphicon-unchecked"/>
-					</button>
-					<p>And another<p>
-				</li>
-				<li class="task">
-					<button type="submit" class="btn btn-sm btn-default task-check-btn" title="Mark complete">
-						<span class="glyphicon glyphicon-unchecked"/>
-					</button>
-					<p>One last one<p>
-				</li>
-			</ul>
-		</div>
+		<% end %>
 
 	</div>
 </div>
 
+<!-- New Tasklist Modal -->
+<div class="modal fade" id="newTaskList" tabindex="-1" role="dialog" aria-labelledby="newTasklistLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
 
+			<div class="modal-header">
+				<h4 class="modal-title" id="newTasklistLabel">Add a new tasklist</h4>
+			</div>
 
-<!-- Modal -->
+			<div class="modal-body">
+				<%= form_for @new_tasklist, html: {class: "form-group"} do |f| %>
+					<%= f.label :name, "Task List Name" %>
+					<%= f.text_field :name, class: "form-control" %>
+			</div>
+
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+				<%= f.submit "Create Task List", class: "btn btn-primary" %>
+				<% end %>
+			</div>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<!-- New Task Modal -->
 <div class="modal fade" id="newTask" tabindex="-1" role="dialog" aria-labelledby="newTaskLabel" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
@@ -56,36 +98,47 @@
 			</div>
 
 			<div class="modal-body">
-				<form role="form">
-					<div class="form-group">
-						<label for="newtask-task">Task</label>
-						<input type="email" class="form-control" id="newtask-task" placeholder="Enter task">
-					</div>
-					<div class="form-group">
-						<label for="newtask-duedate">Due Date (optional)</label>
-						<input type="date" class="form-control" id="newtask-duedate">
-					</div>
-					<div class="form-group">
-						<label for="newtask-priority">Priority</label>
-						<select class="form-control" id="newtask-priority">
-							<option>Low</option>
-							<option selected="selected">Regular</option>
-							<option>High</option>
-						</select>
-					</div>
-				</form>
+				<%= form_for Task.new do |f| %>
+
+				<div class="form-group">
+					<%= f.hidden_field :task_list_id %>
+					<%= f.label :task %>
+					<%= f.text_field :task, class: "form-control" %>
+				</div>
+
+				<div class="checkbox">
+					<label>
+						<input type="checkbox" value="">
+						<%= f.check_box :has_due_date %>
+						Use due date
+					</label>
+				</div>
+
+				<div class="form-group">
+					<%= f.label :duedate, "Due date" %>
+					<%= f.date_select :duedate, class: "form-control" %>
+				</div>
+				<div class="form-group">
+					<%= f.label "Priority" %>
+					<select name="task[priority]" id="task_priority" class="form-control">
+					    <option value="1">Low</option>
+					    <option selected="selected" value="2">Regular</option>
+					    <option value="3">High</option>				    
+					</select>
+				</div>
 			</div>
 
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-				<button type="button" class="btn btn-primary">Add task</button>
+				<%= f.submit "Add Task", class: "btn btn-primary" %>
+				<% end %>
 			</div>
 
 		</div><!-- /.modal-content -->
 	</div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-<!-- Modal -->
+<!-- Share Tasklist Modal -->
 <div class="modal fade" id="shareList" tabindex="-1" role="dialog" aria-labelledby="shareListLabel" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
@@ -138,3 +191,30 @@
 		</div><!-- /.modal-content -->
 	</div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+
+<script type="text/javascript">
+
+	// initialize the default modal state
+	$(document).on("click", ".add-task-btn", function () {
+		$('#task_task_list_id').val( $(this).data('id') );
+
+		$('#task_task').val("");
+		$( "#task_has_due_date" ).val("Regular");
+		$( "#task_has_due_date" ).prop("checked", false);
+		$( "#task_duedate_1i" ).prop( "disabled", true );
+		$( "#task_duedate_2i" ).prop( "disabled", true );
+		$( "#task_duedate_3i" ).prop( "disabled", true );
+	});
+
+	// toggle the modal when disabling the due date
+	$(document).on("click", "#task_has_due_date", function () {
+		$("#task_duedate_1i").prop('disabled', function (_, val) { return ! val; });
+		$("#task_duedate_2i").prop('disabled', function (_, val) { return ! val; });
+		$("#task_duedate_3i").prop('disabled', function (_, val) { return ! val; });
+	});
+
+</script>
+
+<% else %>
+
+<% end %>
