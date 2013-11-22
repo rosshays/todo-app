@@ -10,7 +10,7 @@
 		</button>
 		<div class ="upcoming-events">
 			<div class="upcoming-events-header">
-				<h3>Upcoming Tasks</h3>
+				<h3>Due this week</h3>
 			</div>
 			<table class="table table-hover" id="upcoming-events-table">
 				<% upcoming_tasks = [] %>
@@ -46,7 +46,7 @@
 					<a type="submit" class="btn btn-sm btn-primary add-task-btn" title="Add new task" data-toggle="modal" data-target="#newTask" data-id=<%= "#{list.id}" %>>
 						<span class="glyphicon glyphicon-plus"/>
 					</a>
-					<a type="submit" class="btn btn-sm btn-primary add-task-btn" title="Share tasklist" data-toggle="modal" data-target="#shareList" data-id=<%= "#{list.id}" %>>
+					<a type="submit" class="btn btn-sm btn-primary share-list-btn" title="Share tasklist" data-toggle="modal" data-target="#shareList" data-id=<%= "#{list.id}" %>>
 						<span class="glyphicon glyphicon-share"/>
 					</a>
 					<h2><%= list.name %></h2>
@@ -142,44 +142,18 @@
 			</div>
 
 			<div class="modal-body">
-				<form role="form">
-					<div class="form-group">
-						<label for="sharetask-email">Email Address</label>
-						<input type="email" class="form-control" id="sharetask-email" placeholder="Enter email address">
-					</div>
-					<div class="form-group">
-						<label>Permission</label>
-						<div class="checkbox">
-							<label>
-							<input type="checkbox" value="">
-							Add tasks
-							</label>
-						</div>
-						<div class="checkbox">
-							<label>
-							<input type="checkbox" value="">
-							Mark tasks complete
-							</label>
-						</div>
-						<div class="checkbox">
-							<label>
-							<input type="checkbox" value="">
-							Delete tasks
-							</label>
-						</div>
-						<div class="checkbox">
-							<label>
-							<input type="checkbox" value="">
-							Delete list
-							</label>
-						</div>
-					</div>
-				</form>
+				<%= form_tag share_path, method: "post" do %>
+				<div class="form-group">
+					<%= hidden_field_tag "tasklist_id" %>
+					<%= label_tag "email", "Email address" %>
+					<%= text_field_tag "email", nil, class: "form-control" %>
+				</div>
 			</div>
 
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-				<button type="button" class="btn btn-primary">Share list</button>
+				<%= submit_tag "Share list", class: "btn btn-primary" %>
+				<% end %>
 			</div>
 
 		</div><!-- /.modal-content -->
@@ -202,11 +176,13 @@
 		$("#task_duedate_1i").prop('disabled', function (_, val) { return ! val; });
 		$("#task_duedate_2i").prop('disabled', function (_, val) { return ! val; });
 		$("#task_duedate_3i").prop('disabled', function (_, val) { return ! val; });
+	});
 
+	// set hidden field int the share controller to be list selected
+	$(document).on("click", ".share-list-btn", function () {
+		$('#tasklist_id').val( $(this).data('id') );
 	});
 
 </script>
-
-<% else %>
 
 <% end %>
