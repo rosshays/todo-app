@@ -5,27 +5,31 @@
 <div class="row-fluid">
 	<!-- sidebar for main view -->
 	<div class="col-lg-2" id="sidebar">
-			<button type="submit" class="btn btn-primary add-tasklist-btn" title="Create new tasklist" data-toggle="modal" data-target="#newTaskList">
-				Add Task List
-			</button>
+		<button type="submit" class="btn btn-primary add-tasklist-btn" title="Create new tasklist" data-toggle="modal" data-target="#newTaskList">
+			Add Task List
+		</button>
 		<div class ="upcoming-events">
 			<div class="upcoming-events-header">
 				<h3>Upcoming Tasks</h3>
 			</div>
 			<table class="table table-hover" id="upcoming-events-table">
-				<tr>
-					<td>Dec 1</td>
-					<td>First task</td>
-				</tr>
-				<tr>
-					<td>Dec 12</td>
-					<td>Second task</td>
-				</tr>
-				<tr>
-					<td>Dec 14</td>
-					<td>Third Task</td>
-				</tr>				
-			</table>
+				<% upcoming_tasks = [] %>
+				<% current_user.task_lists.each do |list| %>
+					<% list.tasks.each do |task| %>
+						<% week_from_now = Time.now + (7 * 24 * 60 * 60) %>
+						<% if task.has_due_date  %>
+							<% upcoming_tasks << task %>
+						<% end %>
+					<% end %>					
+				<% end %>
+				<% sorted = upcoming_tasks.sort {|a,b| a.duedate <=> b.duedate} %>
+				<% [10, sorted.size].min.times do |i| %>
+					<tr>
+						<td><%= sorted[i].duedate %></td>
+						<td><%= sorted[i].task %></td>
+					</tr>
+				<% end %>
+			</table>		
 		</div>
 
 
@@ -108,7 +112,6 @@
 
 				<div class="checkbox">
 					<label>
-						<input type="checkbox" value="">
 						<%= f.check_box :has_due_date %>
 						Use due date
 					</label>
@@ -117,14 +120,6 @@
 				<div class="form-group">
 					<%= f.label :duedate, "Due date" %>
 					<%= f.date_select :duedate, class: "form-control" %>
-				</div>
-				<div class="form-group">
-					<%= f.label "Priority" %>
-					<select name="task[priority]" id="task_priority" class="form-control">
-					    <option value="1">Low</option>
-					    <option selected="selected" value="2">Regular</option>
-					    <option value="3">High</option>				    
-					</select>
 				</div>
 			</div>
 
@@ -197,9 +192,6 @@
 	// initialize the default modal state
 	$(document).on("click", ".add-task-btn", function () {
 		$('#task_task_list_id').val( $(this).data('id') );
-
-		$('#task_task').val("");
-		$( "#task_has_due_date" ).val("Regular");
 		$( "#task_has_due_date" ).prop("checked", false);
 		$( "#task_duedate_1i" ).prop( "disabled", true );
 		$( "#task_duedate_2i" ).prop( "disabled", true );
@@ -211,6 +203,7 @@
 		$("#task_duedate_1i").prop('disabled', function (_, val) { return ! val; });
 		$("#task_duedate_2i").prop('disabled', function (_, val) { return ! val; });
 		$("#task_duedate_3i").prop('disabled', function (_, val) { return ! val; });
+
 	});
 
 </script>
