@@ -16,8 +16,7 @@
 				<% upcoming_tasks = [] %>
 				<% current_user.task_lists.each do |list| %>
 					<% list.tasks.each do |task| %>
-						<% week_from_now = Time.now + (7 * 24 * 60 * 60) %>
-						<% if task.has_due_date  %>
+						<% if task.has_due_date && task.duedate < Date.today + 7 %>
 							<% upcoming_tasks << task %>
 						<% end %>
 					<% end %>					
@@ -25,8 +24,8 @@
 				<% sorted = upcoming_tasks.sort {|a,b| a.duedate <=> b.duedate} %>
 				<% [10, sorted.size].min.times do |i| %>
 					<tr>
-						<td><%= sorted[i].duedate %></td>
 						<td><%= sorted[i].task %></td>
+						<td><%= sorted[i].duedate %></td>
 					</tr>
 				<% end %>
 			</table>		
