@@ -5,13 +5,11 @@ html, body, .container-fluid, .row-fluid, #sidebar, #main-view
 }
 
 #sidebar {
-	/*background-color: #08c;*/
 	background-image: url("texture4.png");
 }
 
 #main-view {
 	overflow: scroll;
-	/*background-color: gray;*/
 	background-image: url("texture2.png");
 	white-space: nowrap;
 }
