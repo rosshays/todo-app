@@ -49,6 +49,9 @@
 					<a type="submit" class="btn btn-sm btn-primary share-list-btn" title="Share tasklist" data-toggle="modal" data-target="#shareList" data-id=<%= "#{list.id}" %>>
 						<span class="glyphicon glyphicon-share"/>
 					</a>
+					<a type="submit" class="btn btn-sm btn-primary remove-list-btn" title="Remove tasklist" data-toggle="modal" data-target="#removeList" data-id=<%= "#{list.id}" %>>
+						<span class="glyphicon glyphicon-trash"/>
+					</a>
 					<h2><%= list.name %></h2>
 				</div>
 				<ul class="tasklist-items">
@@ -160,6 +163,38 @@
 	</div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
+<!-- Remove Tasklist Modal -->
+<div class="modal fade" id="removeList" tabindex="-1" role="dialog" aria-labelledby="shareListLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+
+			<div class="modal-header">
+				<h4 class="modal-title" id="removeListLabel">Remove list</h4>
+			</div>
+
+			<div class="modal-body">
+				<%= form_tag remove_list_path, method: "delete" do %>
+				<div class="form-group">
+					<%= hidden_field_tag "remove_list_id" %>
+					<%= hidden_field_tag "remove_method" %>
+					<p> 
+						Deleting your list will also remove all tasks it contains.<br>
+						Would you like to delete this list for everyone or just yourself?
+					</p>
+				</div>
+			</div>
+
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+				<%= submit_tag "Everyone", class: "btn btn-primary", id: "remove-all" %>
+				<%= submit_tag "Just myself", class: "btn btn-primary", id: "remove-me" %>
+				<% end %>
+			</div>
+
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
 <script type="text/javascript">
 
 	// initialize the default modal state
@@ -181,6 +216,18 @@
 	// set hidden field int the share controller to be list selected
 	$(document).on("click", ".share-list-btn", function () {
 		$('#tasklist_id').val( $(this).data('id') );
+	});
+
+	// set hidden field int the share controller to be list selected
+	$(document).on("click", ".remove-list-btn", function () {
+		$('#remove_list_id').val( $(this).data('id') );
+	});
+
+	$(document).on("click", "#remove-me", function () {
+		$('#remove_method').val( "me" );
+	});
+	$(document).on("click", "#remove-all", function () {
+		$('#remove_method').val( "all" );
 	});
 
 </script>

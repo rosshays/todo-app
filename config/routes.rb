@@ -10,6 +10,7 @@ TodoApp::Application.routes.draw do
   get "/login" => "sessions#new", :as => "login"
   delete "/logout" => "sessions#destroy", :as => "logout"
   post "/share" => "task_list_users#share", :as => "share"
+  delete "/remove_list" => "task_lists#remove", :as => "remove_list"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
