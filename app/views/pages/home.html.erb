@@ -40,12 +40,12 @@
 
 			<div class="tasklist" id=<%="tasklist#{list.id}"%>>
 				<div class="tasklist-header">
-					<button type="submit" class="btn btn-sm btn-primary add-task-btn" title="Add new task" data-toggle="modal" data-target="#newTask">
+					<a type="submit" class="btn btn-sm btn-primary add-task-btn" title="Add new task" data-toggle="modal" data-target="#newTask" data-id=<%= "#{list.id}" %>>
 						<span class="glyphicon glyphicon-plus"/>
-					</button>
-					<button type="submit" class="btn btn-sm btn-primary add-task-btn" title="Share tasklist" data-toggle="modal" data-target="#shareList">
+					</a>
+					<a type="submit" class="btn btn-sm btn-primary add-task-btn" title="Share tasklist" data-toggle="modal" data-target="#shareList" data-id=<%= "#{list.id}" %>>
 						<span class="glyphicon glyphicon-share"/>
-					</button>
+					</a>
 					<h2><%= list.name %></h2>
 				</div>
 				<ul class="tasklist-items">
@@ -98,9 +98,10 @@
 			</div>
 
 			<div class="modal-body">
-				<%= form_for Task.new(task_list_id: 2) do |f| %>
+				<%= form_for Task.new do |f| %>
 
 				<div class="form-group">
+					<%= f.hidden_field :task_list_id %>
 					<%= f.label :task %>
 					<%= f.text_field :task, class: "form-control" %>
 				</div>
@@ -182,6 +183,14 @@
 		</div><!-- /.modal-content -->
 	</div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+
+<script type="text/javascript">
+	$(document).on("click", ".add-task-btn", function () {
+		window.alert("test");
+		$('#task_task_list_id').val( $(this).data('id') );
+	});
+</script>
+
 <% else %>
 
 <% end %>
