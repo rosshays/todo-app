@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131122021554) do
+ActiveRecord::Schema.define(:version => 20131122043552) do
 
   create_table "task_list_users", :force => true do |t|
     t.integer  "user_id"
@@ -33,7 +33,6 @@ ActiveRecord::Schema.define(:version => 20131122021554) do
     t.datetime "created_at",                      :null => false
     t.datetime "updated_at",                      :null => false
     t.boolean  "has_due_date"
-    t.string   "priority"
     t.boolean  "finished",     :default => false
   end
 
