@@ -1,5 +1,5 @@
 TodoApp::Application.routes.draw do
-  resources :users
+  resources :users, except: [:show]
   resources :sessions, only: [:new, :create, :destroy]
   resources :task_lists, only: [:create, :destroy]
   resources :task_list_users, only: [:create, :destroy]
@@ -11,6 +11,7 @@ TodoApp::Application.routes.draw do
   delete "/logout" => "sessions#destroy", :as => "logout"
   post "/share" => "task_list_users#share", :as => "share"
   delete "/remove_list" => "task_lists#remove", :as => "remove_list"
+  get "/profile" => "users#show", :as => "profile"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
