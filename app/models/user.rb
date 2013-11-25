@@ -24,6 +24,19 @@ class User < ActiveRecord::Base
 		Digest::SHA1.hexdigest(token.to_s)
 	end
 
+	def getTasks
+		arr = [] 
+		self.task_lists.each do |list| 
+			list.tasks.each do |task| 
+				if task.has_due_date
+					yield task if block_given?				
+					arr << task
+				end
+			end 
+		end
+		return arr
+	end
+
 	private 
 		def create_remember_token
 			self.remember_token = User.encrypt(User.new_remember_token)
