@@ -6,6 +6,7 @@ TodoApp::Application.routes.draw do
   resources :tasks, only: [:new, :create, :destroy]
 
   root :to => "pages#home"
+  get "/calendar" => "pages#calendar", :as => "calendar"
   get "/signup" => "users#new", :as => "signup"
   get "/login" => "sessions#new", :as => "login"
   delete "/logout" => "sessions#destroy", :as => "logout"
