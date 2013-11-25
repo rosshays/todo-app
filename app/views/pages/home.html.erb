@@ -25,7 +25,7 @@
 				<% [10, sorted.size].min.times do |i| %>
 					<tr>
 						<td><%= sorted[i].task %></td>
-						<td><%= sorted[i].duedate %></td>
+						<td><%= sorted[i].duedate.strftime('%b %e') %></td>
 					</tr>
 				<% end %>
 			</table>		
@@ -52,7 +52,11 @@
 					<a type="submit" class="btn btn-sm btn-primary remove-list-btn" title="Remove tasklist" data-toggle="modal" data-target="#removeList" data-id=<%= "#{list.id}" %>>
 						<span class="glyphicon glyphicon-trash"/>
 					</a>
-					<h2><%= list.name %></h2>
+					<% if list.name.length >= 15 %>
+						<h3 title="<%= list.name %>"><%= list.name[0, 13] + "..." %></h3>
+					<% else %>
+						<h3><%= list.name %></h3>
+					<% end %>
 				</div>
 				<ul class="tasklist-items">
 					<% list.tasks.each do |task| %>

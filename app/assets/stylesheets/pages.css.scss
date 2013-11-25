@@ -5,13 +5,11 @@ html, body, .container-fluid, .row-fluid, #sidebar, #main-view
 }
 
 #sidebar {
-	/*background-color: #08c;*/
 	background-image: url("texture4.png");
 }
 
 #main-view {
 	overflow: scroll;
-	/*background-color: gray;*/
 	background-image: url("texture2.png");
 	white-space: nowrap;
 }
@@ -37,7 +35,7 @@ html, body, .container-fluid, .row-fluid, #sidebar, #main-view
 .tasklist {
 	display: inline-block;
 	margin: 10px;
-	width: 280px;
+	width: 300px;
 	border-radius: 5px;
 	background-color: white;
 	vertical-align: top;
