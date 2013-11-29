@@ -16,7 +16,7 @@
 				<% upcoming_tasks = [] %>
 				<% current_user.task_lists.each do |list| %>
 					<% list.tasks.each do |task| %>
-						<% if task.has_due_date && task.duedate < Date.today + 7 %>
+						<% if task.has_due_date && !task.finished && task.duedate < Date.today + 7 %>
 							<% upcoming_tasks << task %>
 						<% end %>
 					<% end %>					
@@ -60,9 +60,17 @@
 				</div>
 				<ul class="tasklist-items">
 					<% list.tasks.each do |task| %>
-						<li class="task">
-							<button type="submit" class="btn btn-sm btn-default task-check-btn" title="Mark complete">
-								<span class="glyphicon glyphicon-unchecked"/>
+						<% if task.finished %>
+							<li class="task finished-task" id="task<%=task.id%>">
+						<% else %>
+							<li class="task" id="task<%=task.id%>">
+						<% end %>
+							<button type="submit" class="btn btn-sm btn-default check-task-btn" title="Mark complete">
+								<% if task.finished %>
+									<span class="glyphicon glyphicon-check"/>
+								<% else %>
+									<span class="glyphicon glyphicon-unchecked"/>
+								<% end %>
 							</button>
 							<p><%= task.task %><p>
 						</li>
@@ -200,7 +208,6 @@
 </div><!-- /.modal -->
 
 <script type="text/javascript">
-
 	// initialize the default modal state
 	$(document).on("click", ".add-task-btn", function () {
 		$('#task_task_list_id').val( $(this).data('id') );
@@ -233,7 +240,31 @@
 	$(document).on("click", "#remove-all", function () {
 		$('#remove_method').val( "all" );
 	});
+</script>
 
+<script type="text/javascript">
+	$(document).on("click", ".check-task-btn", function() {
+
+		$(this).parent().toggleClass("finished-task");
+		$(this).children().toggleClass("glyphicon-unchecked");
+		$(this).children().toggleClass("glyphicon-check");
+
+		var taskNumber = $(this).parent().attr("id").substring(4);
+
+
+		$.ajax({
+			url: "/task_toggle",
+			type: "post",
+			data: {task_id: taskNumber},
+			dataType: "JSON"
+			// success: function() {
+				// window.alert("it worked");
+			// },
+			// error: function() {
+				// window.alert("no");
+			// }
+		});
+	});
 </script>
 
 <% end %>

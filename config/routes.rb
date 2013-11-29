@@ -3,7 +3,7 @@ TodoApp::Application.routes.draw do
   resources :sessions, only: [:new, :create, :destroy]
   resources :task_lists, only: [:create, :destroy]
   resources :task_list_users, only: [:create, :destroy]
-  resources :tasks, only: [:new, :create, :destroy]
+  resources :tasks, only: [:new, :create, :destroy, :edit]
 
   root :to => "pages#home"
   get "/calendar" => "pages#calendar", :as => "calendar"
@@ -13,6 +13,7 @@ TodoApp::Application.routes.draw do
   post "/share" => "task_list_users#share", :as => "share"
   delete "/remove_list" => "task_lists#remove", :as => "remove_list"
   get "/profile" => "users#show", :as => "profile"
+  post "/task_toggle" => "tasks#toggle", :as => "task_toggle"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
