@@ -57,6 +57,10 @@ li.task {
 	margin-bottom: 20px;
 }
 
+.finished-task {
+	text-decoration: line-through;
+	color: gray;
+}
 
 
 .main{
@@ -83,7 +87,7 @@ li.task {
 	margin-right: 5px;
 }
 
-.task-check-btn {
+.check-task-btn {
 	float: left;
 	margin-right: 5px;
 }
