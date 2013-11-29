@@ -11,6 +11,7 @@ class SessionsController < ApplicationController
 		if user && user.authenticate(params[:session][:password])
 			# login the user
 			sign_in user
+			flash[:success] = "Signed in";
 			redirect_to root_path
 		else
 			# something went wrong
