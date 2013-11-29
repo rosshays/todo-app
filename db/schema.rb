@@ -29,9 +29,9 @@ ActiveRecord::Schema.define(:version => 20131122043552) do
   create_table "tasks", :force => true do |t|
     t.string   "task"
     t.date     "duedate"
-    t.integer  "task_list_id"
     t.datetime "created_at",                      :null => false
     t.datetime "updated_at",                      :null => false
+    t.integer  "task_list_id"
     t.boolean  "has_due_date"
     t.boolean  "finished",     :default => false
   end
