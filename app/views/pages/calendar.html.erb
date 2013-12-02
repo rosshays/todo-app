@@ -36,9 +36,11 @@
 
 	<div class="col-lg-10" id="main-view">
 
+		<div class="well" style="margin-top: 10px;">
 		<%=calendar current_user.getTasks, class: "calendar table" do |t| %>
 			<div><%= t.task %></div>
 		<%end%>
+		</div>
 
 	</div>
 </div>
