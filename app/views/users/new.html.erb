@@ -9,13 +9,13 @@
 			<h1>Sign up</h1>
 	
 			<% if @user.errors.any? %>
-				<div id="error_explanation">
+				<div class="error_explanation">
 					<div class="alert alert-error">
 						The form contains <%= pluralize(@user.errors.count, "error") %>.
 					</div>
 					<ul>
 						<% @user.errors.full_messages.each do |msg| %>
-							<li>* <%= msg %></li>
+							<li><%= msg %></li>
 						<% end %>
 					</ul>
 				</div>
@@ -34,6 +34,7 @@
 			<%= f.password_field :password_confirmation, class: "form-control", type: "password" %>
 
 			<%= f.submit "Sign up", class: "btn btn-large btn-primary" %>
+			<p style="margin-top: 20px; margin-bottom: 0px;">Already have an account? <%= link_to "Log in here", login_path %></p>
 		<% end %>
 	</div>
 </div>

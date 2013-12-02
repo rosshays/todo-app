@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-	
+
 	def new
 		@user = User.new if @user.nil?
 	end
