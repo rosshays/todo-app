@@ -1,5 +1,6 @@
 class TasksController < ApplicationController
 
+	#Used to create a new task
 	def create
 		@task = Task.new(params[:task])
 		if @task.save
@@ -9,6 +10,7 @@ class TasksController < ApplicationController
 		end
 	end
 
+	#This toggles the "finished" button
 	def toggle
 		task = Task.find(params[:task_id])
 		task.finished = !task.finished
