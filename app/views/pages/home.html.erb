@@ -99,7 +99,7 @@
 
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-				<%= f.submit "Create Task List", class: "btn btn-primary" %>
+				<%= f.submit "Create Task List", class: "btn btn-primary", id: "submit_add_tasklist" %>
 				<% end %>
 			</div>
 		</div><!-- /.modal-content -->
@@ -139,7 +139,7 @@
 
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-				<%= f.submit "Add Task", class: "btn btn-primary" %>
+				<%= f.submit "Add Task", class: "btn btn-primary", id: "submit_add_task" %>
 				<% end %>
 			</div>
 
@@ -167,7 +167,7 @@
 
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-				<%= submit_tag "Share list", class: "btn btn-primary" %>
+				<%= submit_tag "Share list", class: "btn btn-primary", id: "submit_share_list" %>
 				<% end %>
 			</div>
 
@@ -207,14 +207,17 @@
 	</div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
+
+<!-- code dealing with the add task modal -->
 <script type="text/javascript">
-	// initialize the default modal state
+	// initialize the default add task modal state
 	$(document).on("click", ".add-task-btn", function () {
-		$('#task_task_list_id').val( $(this).data('id') );
+		$('#task_task_list_id').val($(this).data('id'));
 		$( "#task_has_due_date" ).prop("checked", false);
 		$( "#task_duedate_1i" ).prop( "disabled", true );
 		$( "#task_duedate_2i" ).prop( "disabled", true );
 		$( "#task_duedate_3i" ).prop( "disabled", true );
+		$( "#submit_add_task" ).prop( "disabled", true );
 	});
 
 	// toggle the modal when disabling the due date
@@ -229,7 +232,7 @@
 		$('#tasklist_id').val( $(this).data('id') );
 	});
 
-	// set hidden field int the share controller to be list selected
+	// set hidden field int the remove to be list selected
 	$(document).on("click", ".remove-list-btn", function () {
 		$('#remove_list_id').val( $(this).data('id') );
 	});
@@ -239,6 +242,55 @@
 	});
 	$(document).on("click", "#remove-all", function () {
 		$('#remove_method').val( "all" );
+	});
+
+	// disable appropriately
+	$(document).on("change keyup paste", "#task_task", function () {
+		var text_contet = $(this).val();
+		if (text_contet != "") {
+			$("#submit_add_task").prop("disabled", false);
+		} else {
+			$("#submit_add_task").prop("disabled", true);
+		}
+	});
+</script>
+
+<!-- code dealing with the add task list modal -->
+<script type="text/javascript">
+
+	$(document).on("click", ".add-tasklist-btn", function () {
+		$("#task_list_name").val("");
+		$("#submit_add_tasklist").prop("disabled", true);
+	});
+
+	$(document).on("change keyup paste", "#task_list_name", function () {
+		var text_contet = $(this).val();
+		if (text_contet != "") {
+			$("#submit_add_tasklist").prop("disabled", false);
+		} else {
+			$("#submit_add_tasklist").prop("disabled", true);
+		}
+	});
+</script>
+
+<!-- code dealing with the share list modal -->
+<script type="text/javascript">
+
+	// set hidden field int the share controller to be list selected
+	$(document).on("click", ".share-list-btn", function () {
+		$('#tasklist_id').val( $(this).data('id') );
+		$("#email").val("");
+		$("#submit_share_list").prop("disabled", true);
+	});
+
+	$(document).on("change keyup paste", "#email", function () {
+		var text_contet = $(this).val();
+		// use regex to test if the email entered is valid
+		if (/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/.test(text_contet)) {
+			$("#submit_share_list").prop("disabled", false);
+		} else {
+			$("#submit_share_list").prop("disabled", true);
+		}
 	});
 </script>
 

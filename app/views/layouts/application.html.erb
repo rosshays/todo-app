@@ -22,18 +22,7 @@
 
 <body>
 	<%= render "layouts/navbar" %>
-	<% if signed_in? %>
-		<%= yield %>
-	<% else %>
-		<script type="text/javascript">
-			if (window.location.href.indexOf("signup") == -1 &&
-				window.location.href.indexOf("login") == -1) {
-				window.location.href="/signup" 
-			};
-		</script>
-		<%= yield %>
-	<% end %>
-
+	<%= yield %>
 </body>
 
 </html>
