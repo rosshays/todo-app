@@ -36,7 +36,7 @@
 
 	<div class="col-lg-10" id="main-view">
 
-		<%=calendar current_user.getTasks do |t| %>
+		<%=calendar current_user.getTasks, class: "calendar table" do |t| %>
 			<div><%= t.task %></div>
 		<%end%>
 

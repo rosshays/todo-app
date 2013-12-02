@@ -1,6 +1,6 @@
 class TaskListUsersController < ApplicationController
 
-
+	#This function will share a list
 	def share
 		task_list_user = TaskListUser.new
 		user = User.find_by_email(params[:email])

@@ -1,5 +1,6 @@
 class TaskListsController < ApplicationController
 
+	#Creating a new task list
 	def create
 		@task_list = TaskList.new(params[:task_list])
 		@task_list.task_list_users.build(user_id: current_user.id)
