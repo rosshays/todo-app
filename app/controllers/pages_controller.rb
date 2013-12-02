@@ -1,4 +1,5 @@
 class PagesController < ApplicationController
+	before_filter :signed_in_user
 
 	#This will get the users lists if they are currently signed in
 	def home
