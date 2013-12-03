@@ -13,6 +13,7 @@
 				<h3>Due this week</h3>
 			</div>
 			<table class="table table-hover" id="upcoming-events-table">
+				<!-- This iterates through upcoming events and finds dates due within the week and displays them -->
 				<% upcoming_tasks = [] %>
 				<% current_user.task_lists.each do |list| %>
 					<% list.tasks.each do |task| %>
@@ -35,7 +36,7 @@
 	</div>
 
 	<div class="col-lg-10" id="main-view">
-
+	<!-- This calls the simple calendar and displays it -->
 		<%=calendar current_user.getTasks, class: "calendar table" do |t| %>
 			<div><%= t.task %></div>
 		<%end%>
@@ -68,6 +69,7 @@
 </div><!-- /.modal -->
 
 <!-- New Task Modal -->
+<!-- See home.html.erb for documentation of modals-->
 <div class="modal fade" id="newTask" tabindex="-1" role="dialog" aria-labelledby="newTaskLabel" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
