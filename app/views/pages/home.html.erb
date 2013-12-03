@@ -1,6 +1,5 @@
 <% title "Todo App" %>
 <% css "pages" %>
-
 <% if signed_in? %>
 <div class="row-fluid">
 	<!-- sidebar for main view -->
@@ -28,14 +27,14 @@
 						<td><%= sorted[i].duedate.strftime('%b %e') %></td>
 					</tr>
 				<% end %>
-			</table>		
+			</table>	
 		</div>
-
-
+		<%flash.each do |completed, action|%>
+			<div class="popup" style='display:none'><%=action%></div>
+		<%end%>
 	</div>
-
 	<div class="col-lg-10" id="main-view">
-
+		
 		<% current_user.task_lists.each do |list| %>
 
 			<% # skipping empty or unintialized list %>
@@ -78,7 +77,6 @@
 				</ul>
 			</div>
 		<% end %>
-
 	</div>
 </div>
 
@@ -99,7 +97,7 @@
 
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-				<%= f.submit "Create Task List", class: "btn btn-primary" %>
+				<%= f.submit "Create Task List", class: "btn btn-primary create-list-completed" %>
 				<% end %>
 			</div>
 		</div><!-- /.modal-content -->
@@ -139,7 +137,7 @@
 
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-				<%= f.submit "Add Task", class: "btn btn-primary" %>
+				<%= f.submit "Add Task", class: "btn btn-primary add-task-completed" %>
 				<% end %>
 			</div>
 
@@ -205,10 +203,12 @@
 
 		</div><!-- /.modal-content -->
 	</div><!-- /.modal-dialog -->
+
 </div><!-- /.modal -->
 
 <script type="text/javascript">
 	// initialize the default modal state
+
 	$(document).on("click", ".add-task-btn", function () {
 		$('#task_task_list_id').val( $(this).data('id') );
 		$( "#task_has_due_date" ).prop("checked", false);
@@ -266,5 +266,13 @@
 		});
 	});
 </script>
+
+<script type="text/javascript">
+	$(document).ready(function()
+	{
+		$('.popup').fadeIn(400).delay(3000).fadeOut(400); 
+	});
+</script>
+
 
 <% end %>

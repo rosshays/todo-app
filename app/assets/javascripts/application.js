@@ -14,3 +14,6 @@
 //= require jquery_ujs
 //= require_tree .
 
+	<script type="text/javascript">
+			$(.popup).fadeIn(400).delay(3000).fadeOut(400);
+		</script>
