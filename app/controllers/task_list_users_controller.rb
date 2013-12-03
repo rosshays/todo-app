@@ -8,7 +8,7 @@ class TaskListUsersController < ApplicationController
 		task_list_user.user_id = user.id
 		task_list_user.task_list_id = list.id
 		if task_list_user.save
-			redirect_to root_path
+			redirect_to root_path, flash: {action:  "Task List Shared"}
 		else
 			render "pages/home"
 		end

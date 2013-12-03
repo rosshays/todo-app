@@ -7,7 +7,7 @@ class TaskListsController < ApplicationController
 		
 		# current_user.task_lists.build(params[:task_list])
 		if @task_list.save
-			redirect_to root_path
+			redirect_to root_path, flash: {action:  "Task List Added"}
 		else
 			render "pages/home"
 		end
@@ -20,6 +20,7 @@ class TaskListsController < ApplicationController
 		@task_list_users.each do |list_user|
 			list_user.destroy
 		end
+		flash[:action] = "Task List Deleted"
 	end
 
 	# just being removed for current user
@@ -42,7 +43,7 @@ class TaskListsController < ApplicationController
 			end
 			list.destroy
 		end
-		redirect_to root_path
+		redirect_to root_path, flash: {action:  "Task List Removed"}
 	end
 
 end

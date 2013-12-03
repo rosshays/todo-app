@@ -112,3 +112,18 @@ body {
 	height: 100%;
 	width: 100%;
 }
+
+.popup{
+    width:200px;
+    height:50px;
+    border:2px solid #eee;
+    background:black;
+    color:white;
+    font-family:Calibri;
+    line-height:50px;
+    text-align:center;
+    font-size:15px;
+    position:absolute;
+    left:5%;
+    bottom: 5%;
+}

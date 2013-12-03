@@ -1,6 +1,6 @@
 <% title "Todo App" %>
 <% css "pages" %>
-
+<!-- Checks if the user is signed in -->
 <% if signed_in? %>
 <div class="row-fluid">
 	<!-- sidebar for main view -->
@@ -13,6 +13,7 @@
 				<h3>Due this week</h3>
 			</div>
 			<table class="table table-hover" id="upcoming-events-table">
+				<!-- This iterates through upcoming events and finds dates due within the week and displays them -->
 				<% upcoming_tasks = [] %>
 				<% current_user.task_lists.each do |list| %>
 					<% list.tasks.each do |task| %>
@@ -28,19 +29,21 @@
 						<td><%= sorted[i].duedate.strftime('%b %e') %></td>
 					</tr>
 				<% end %>
-			</table>		
+			</table>	
 		</div>
-
-
+		<%flash.each do |completed, action|%>
+			<div class="popup" style='display:none'><%=action%></div>
+		<%end%>
 	</div>
-
 	<div class="col-lg-10" id="main-view">
-
+		
+		<!-- This iterates through each task list -->
 		<% current_user.task_lists.each do |list| %>
 
 			<% # skipping empty or unintialized list %>
 			<% if list.name.nil? || list.name.empty? then next end%>
 
+			<!-- This displays each task list -->
 			<div class="tasklist" id=<%="tasklist#{list.id}"%>>
 				<div class="tasklist-header">
 					<a type="submit" class="btn btn-sm btn-primary add-task-btn" title="Add new task" data-toggle="modal" data-target="#newTask" data-id=<%= "#{list.id}" %>>
@@ -58,6 +61,8 @@
 						<h3><%= list.name %></h3>
 					<% end %>
 				</div>
+
+				<!-- Displaying each task inside each task list-->
 				<ul class="tasklist-items">
 					<% list.tasks.each do |task| %>
 						<% if task.finished %>
@@ -78,7 +83,6 @@
 				</ul>
 			</div>
 		<% end %>
-
 	</div>
 </div>
 
@@ -90,7 +94,7 @@
 			<div class="modal-header">
 				<h4 class="modal-title" id="newTasklistLabel">Add a new tasklist</h4>
 			</div>
-
+			<!-- Submission form for new task lists -->
 			<div class="modal-body">
 				<%= form_for @new_tasklist, html: {class: "form-group"} do |f| %>
 					<%= f.label :name, "Task List Name" %>
@@ -114,7 +118,7 @@
 			<div class="modal-header">
 				<h4 class="modal-title" id="newTaskLabel">Add a new task</h4>
 			</div>
-
+			<!-- Form for submitting a new task --> 
 			<div class="modal-body">
 				<%= form_for Task.new do |f| %>
 
@@ -124,6 +128,7 @@
 					<%= f.text_field :task, class: "form-control" %>
 				</div>
 
+				<!-- This enables a date to be selected and is used when outputting a task onto the calendar -->
 				<div class="checkbox">
 					<label>
 						<%= f.check_box :has_due_date %>
@@ -156,6 +161,7 @@
 				<h4 class="modal-title" id="shareListLabel">Share your list</h4>
 			</div>
 
+			<!-- Sharing a task list -->
 			<div class="modal-body">
 				<%= form_tag share_path, method: "post" do %>
 				<div class="form-group">
@@ -184,6 +190,7 @@
 				<h4 class="modal-title" id="removeListLabel">Remove list</h4>
 			</div>
 
+			<!-- This has the hidden fields which tell the form which task to delete. Selecting deleting it from everyone removes the whole list, while selecting it for just self removes it from the M:M relationship -->
 			<div class="modal-body">
 				<%= form_tag remove_list_path, method: "delete" do %>
 				<div class="form-group">
@@ -205,6 +212,7 @@
 
 		</div><!-- /.modal-content -->
 	</div><!-- /.modal-dialog -->
+
 </div><!-- /.modal -->
 
 
@@ -319,5 +327,13 @@
 		});
 	});
 </script>
+
+<script type="text/javascript">
+	$(document).ready(function()
+	{
+		$('.popup').fadeIn(400).delay(3000).fadeOut(400); 
+	});
+</script>
+
 
 <% end %>
