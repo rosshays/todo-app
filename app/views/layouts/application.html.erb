@@ -11,6 +11,7 @@
 	<%= stylesheet_link_tag "bootstrap-theme.min", :media => "all" %>
 	<%= stylesheet_link_tag "application", :media => "all" %>
 	<%= stylesheet_link_tag yield :view_specific_css %>
+	<%= stylesheet_link_tag "popup", :media => "all" %>
 
 	<!-- Latest compiled and minified JavaScript -->
 	<%= javascript_include_tag "jquery-1.10.2.min" %>
@@ -23,6 +24,7 @@
 <body>
 	<%= render "layouts/navbar" %>
 	<%= yield %>
+	<%= render "layouts/popups" %>
 </body>
 
 </html>

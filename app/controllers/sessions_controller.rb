@@ -17,12 +17,14 @@ class SessionsController < ApplicationController
 			redirect_to root_path
 		else
 			# something went wrong
+			flash[:failure] = "Incorrect email/password combination";
 			render "new"
 		end
 	end
 
 	def destroy
-		sign_out
+		sign_out 
+		flash[:succes] = "Logged out"
     	redirect_to root_url
 	end
 
