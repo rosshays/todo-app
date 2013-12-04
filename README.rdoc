@@ -7,7 +7,138 @@ This pattern splits the view (also called the presentation) into "dumb"
 templates that are primarily responsible for inserting pre-built data in between
 HTML tags. The model contains the "smart" domain objects (such as Account,
 Product, Person, Post) that holds all the business logic and knows how to
-persist themselves to a database. The controller handles the incoming requests
+persist themselves to a database. The controller handles the incoming requestsTodo
+
+==Description==
+Todo is a web-based application that allows you to create task lists. Tasks in 
+these lists can have optional dates which allows users to stay organized with a 
+due this week bar to see what is due soon and a calendar page that lets you see 
+tasks by month. Todo task lists are sharable which allows collaborators to stay 
+on top of group assignments.
+ 
+Todo was created by Group B in Ruby on Rails for Ohio State’s CSE 3901 class.
+
+==Setting up Todo==
+
+These are instructions for running Todo on a Linux machine assuming that you 
+already have the repositories. On windows machines you will need to install 
+node.js http://nodejs.org/download/ before setting up the application. 
+
+  1.  To start using Todo you must first prepare the application for use:
+  2.  Start by moving to the todo-app directory where the application files are
+    located
+  3.  You must then run the following commands  
+      bundle install --without production
+      bundle update
+      rake db:migrate
+  4.  Once those actions are completed you start the rails server with the command
+      rails server
+  5.  When this is complete, in a web browser go to localhost:3000 to use the 
+    application
+
+==Getting Started==
+
+The first time you use Todo is will direct you to the signup page where you must 
+create an account with your name, email and password. Once signed up you should 
+be redirected to the main page where you can see application 
+in list view. The navbar on the top of the page allows you to switch between 
+list and calendar views, log out, or change your settings.
+
+The list view page is where you can see upcoming tasks and manage task lists. 
+To create a new task list click the “Add Task List button” a window will then 
+appear asking for the name of the task list, once you select create task list 
+the window disappears and a task list appears in the task list area.
+Task lists have three options: Add new task, share task list, and remove task 
+list.
+  - The Add new task feature allows you to add tasks to a list, when the 
+    button is clicked a window appears with fields for task name and the
+    potential to add a due date to the task
+  - The share task button allows you to share this list with another user,
+    when clicked a window appears asking for the email you would like to 
+    share the list with.
+  - The remove task list button allows you to delete task lists for just 
+    yourself or everyone.
+ 
+The calendar view allows you to see tasks by date in a standard monthly 
+calendar, this view still has the upcoming task sidebar.
+
+==Description of Contents==
+
+==Controllers
+  application_controller.rb
+    ??
+  pages_controller.rb
+    This controller gets the users task lists if they are signed in for
+    the list and calendar views
+  sessions_controller.rb
+    This controls the current session, which checks if someone is signed in
+    and creates a new session upon logging in. it also handles signing out
+  task_list_users_controller.rb
+    This controls list sharing, by adding another email from the share modal
+    to the task_list_user model for that list.
+  task_lists_controller.rb
+    This controls the creation and removal of tasklist objects
+  tasks_controller.rb
+    This controls the creation of tasks and the actions of the finished button
+  users_controller.rb
+    This controls the creation of new accounts
+    
+==Models
+  task.rb
+    This model is in charge of the task objects. gives the task object the 
+    attributes :duedate, :task, :task_list_id, :has_due_date and gives tasks
+    a realation to task_list
+  task_list.rb
+    This model is in charge of the TaskList object. gives the tasklist
+    object the name attribute, ans sets relationships between the tasklist,
+    tasks, task_list_users, and users models
+  task_list_user.rb
+    This model is in charge of the relationships between tasklists and
+    users. It gives the object the attributes task_list_id and user_id
+  user.rb
+    This model is in charge of the user object. It sets the relationships
+    between users and tasklists and task_list_users. It gives the attributes
+    email, name, password, and remember token. It has functions new_remember_token,
+    encrypt, getTasks, and create_remember_token. The getTasks function gets the
+    tasks that have due dates for that user.
+    
+==Views
+  layouts/_navbar.html.erb
+    This file contains the eRuby HTML for the Navigation Bar at the top of 
+    all pages of the application.
+  layouts/application.html.erb
+    This file contains the links to the stylesheets, javascript, renders
+    the navbar then yields.
+  pages/calendar.html.erb
+    This file contains the eRuby HTML for the calendar page of the 
+    application
+  pages/home.html.erb
+    This file contains the eRuby HTML for the list view page including the
+    code for the modals for creating, adding to, sharing and removing lists
+  sessions/new.html.erb
+    This file contains the HTML for the log in page
+  users/new.html.erb
+    This file contains the eRuby HTML for the sign up page and passes the
+    information to the controller to create a new account
+  users/show.html.erb
+    This file contains the eRuby HTML for the users profile, where users
+    can change their settings such as name, email, and password
+    
+==Helpers
+  application_helper.rb
+    ??
+  pages_helper.rb
+    Empty, Generated Automatically
+  sessions_helper.rb
+    ??
+  task_list_users_helper.rb
+    Empty, Generated Automatically
+  task_lists_helper.rb
+    Empty, Generated Automatically
+  tasks_helper.rb
+    Empty, Generated Automatically
+  users_helper.rb
+    Empty, Generated Automatically
 (such as Save New Account, Update Product, Show Post) by manipulating the model
 and directing data to the view.
 
