@@ -65,8 +65,6 @@ calendar, this view still has the upcoming task sidebar.
 ==Description of Contents==
 
 ==Controllers
-  application_controller.rb
-    ??
   pages_controller.rb
     This controller gets the users task lists if they are signed in for
     the list and calendar views
@@ -103,9 +101,6 @@ calendar, this view still has the upcoming task sidebar.
     tasks that have due dates for that user.
     
 ==Views
-  layouts/_navbar.html.erb
-    This file contains the eRuby HTML for the Navigation Bar at the top of 
-    all pages of the application.
   layouts/application.html.erb
     This file contains the links to the stylesheets, javascript, renders
     the navbar then yields.
@@ -125,22 +120,10 @@ calendar, this view still has the upcoming task sidebar.
     can change their settings such as name, email, and password
     
 ==Helpers
-  application_helper.rb
-    ??
   pages_helper.rb
     Empty, Generated Automatically
   sessions_helper.rb
-    ??
-  task_list_users_helper.rb
-    Empty, Generated Automatically
-  task_lists_helper.rb
-    Empty, Generated Automatically
-  tasks_helper.rb
-    Empty, Generated Automatically
-  users_helper.rb
-    Empty, Generated Automatically
-(such as Save New Account, Update Product, Show Post) by manipulating the model
-and directing data to the view.
+    Useful functions used for authenticating users
 
 In Rails, the model is handled by what's called an object-relational mapping
 layer entitled Active Record. This layer allows you to present the data from
@@ -155,7 +138,6 @@ unlike the relationship between the Active Record and Action Pack that is much
 more separate. Each of these packages can be used independently outside of
 Rails. You can read more about Action Pack in
 link:files/vendor/rails/actionpack/README.html.
-
 
 == Getting Started
 
