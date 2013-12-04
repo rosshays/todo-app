@@ -16,8 +16,19 @@ class UsersController < ApplicationController
 		end
 	end
 
+	def update
+		@user = User.find(params[:id])
+		@user.update_attributes(params[:user])
+		if @user.save
+			redirect_to root_path
+			flash[:success] = "Profile updated"
+		else
+			render 'show'
+		end
+	end
+
 	def show
-	
+		@user = current_user
 	end
 
 end
